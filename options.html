@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Cài Đặt - Công Cụ Screenshot</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #e8e8e8;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            margin: 0 0 20px 0;
+            color: #e8e8e8;
+            font-size: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+
+        .setting-group input[type="number"],
+        .setting-group input[type="text"],
+        .setting-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e8e8e8;
+            transition: border-color 0.2s ease;
+        }
+
+        .setting-group select option {
+            background: #ffffff;
+            color: #1a1a1a;
+            padding: 8px;
+        }
+
+        .setting-group input[type="number"]:focus,
+        .setting-group input[type="text"]:focus,
+        .setting-group select:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a1a;
+        }
+
+        /* Radio Group Styles */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .radio-option input[type="radio"] {
+            margin: 0;
+            width: 18px;
+            height: 18px;
+            accent-color: #ffffff;
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-label {
+            color: #ffffff;
+        }
+
+        .radio-option:has(input[type="radio"]:checked) {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .radio-label {
+            flex: 1;
+            color: #d1d5db;
+            line-height: 1.4;
+        }
+
+        .radio-label strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .radio-label small {
+            opacity: 0.8;
+            font-size: 13px;
+        }
+
+        .setting-group input[type="text"]::placeholder {
+            color: #6c757d;
+        }
+
+        .setting-group .description {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .btn {
+            background: #ffffff;
+            color: #1a1a1a;
+            border: 1px solid #e5e5e5;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e8e8e8;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .status {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .shortcuts-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .shortcuts-table th,
+        .shortcuts-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .shortcuts-table th {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            color: #d1d5db;
+        }
+
+        .shortcuts-table code {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            color: #3b82f6;
+        }
+
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 5px;
+            color: #d1d5db;
+        }
+
+        /* Tab Styles */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #9ca3af;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab-button:hover {
+            color: #e8e8e8;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-button.active {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* API Settings styles */
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .status-indicator {
+            font-size: 16px;
+        }
+
+        .api-key-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .api-key-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .api-key-text {
+            font-family: 'Courier New', monospace;
+            color: #1a1a1a;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 8px 12px;
+            border-radius: 4px;
+            flex: 1;
+            word-break: break-all;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .api-key-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .api-key-actions button {
+            padding: 6px 10px;
+            font-size: 11px;
+            border-radius: 4px;
+            white-space: nowrap;
+            min-width: auto;
+        }
+
+        .api-key-actions .toggle-api-key {
+            background: #007bff;
+            color: white;
+            border: 1px solid #0056b3;
+        }
+
+        .api-key-actions .toggle-api-key:hover {
+            background: #0056b3;
+        }
+
+        .api-key-actions .copy-api-key {
+            background: #28a745;
+            color: white;
+            border: 1px solid #1e7e34;
+        }
+
+        .api-key-actions .copy-api-key:hover {
+            background: #1e7e34;
+        }
+
+        .api-key-actions .remove-api-key {
+            background: #dc3545;
+            color: white;
+            border: 1px solid #c82333;
+        }
+
+        .api-key-actions .remove-api-key:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ Cài Đặt Extension</h1>
+            <p>Tùy chỉnh cách thức hoạt động của extension</p>
+        </div>
+
+        <div id="status" class="status" style="display: none;"></div>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="screenshot">📸 Chụp Ảnh Màn Hình</button>
+            <button class="tab-button" data-tab="api">🔑 OCR Settings</button>
+            <button class="tab-button" data-tab="wordpress">🔐 WordPress</button>
+            <button class="tab-button" data-tab="guide">📖 Hướng Dẫn</button>
+        </div>
+
+        <!-- Screenshot Tab -->
+        <div id="screenshot-tab" class="tab-content active">
+            <div class="card">
+                <h2>📸 Cài Đặt Chụp Ảnh Màn Hình</h2>
+                
+                <div class="setting-group">
+                    <label for="autoCloseDrawingTool">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="autoCloseDrawingTool">
+                            Tự động đóng công cụ vẽ sau khi copy
+                        </div>
+                    </label>
+                    <div class="description">
+                        Tự động đóng tab công cụ vẽ sau khi copy ảnh vào clipboard
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label for="showNotifications">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showNotifications">
+                            Hiển thị thông báo
+                        </div>
+                    </label>
+                    <div class="description">
+                        Hiển thị thông báo khi chụp ảnh thành công hoặc thất bại
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label for="defaultTool">Công cụ vẽ mặc định:</label>
+                    <select id="defaultTool">
+                        <option value="arrow">➡️ Mũi tên</option>
+                        <option value="rectangle">⬜ Hình chữ nhật</option>
+                        <option value="circle">⭕ Hình tròn</option>
+                        <option value="line">📏 Đường thẳng</option>
+                        <option value="pen">✏️ Bút vẽ tự do</option>
+                    </select>
+                    <div class="description">
+                        Công cụ sẽ được chọn mặc định khi mở công cụ vẽ
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label for="defaultColor">Màu vẽ mặc định:</label>
+                    <input type="color" id="defaultColor" value="#ff0000">
+                    <div class="description">
+                        Màu sắc mặc định cho các công cụ vẽ
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label for="defaultThickness">Độ dày nét vẽ mặc định:</label>
+                    <input type="number" id="defaultThickness" min="1" max="20" value="3">
+                    <div class="description">
+                        Độ dày của nét vẽ (1-20 pixel)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WordPress Tab -->
+        <div id="wordpress-tab" class="tab-content">
+            <div class="card">
+                <h2>🚀 Tính Năng Inline Popup</h2>
+                
+                <div style="
+                    background: rgba(22, 163, 74, 0.1);
+                    border: 1px solid rgba(22, 163, 74, 0.3);
+                    border-radius: 8px;
+                    padding: 20px;
+                    margin-bottom: 25px;
+                ">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                        <span style="color: #16a34a; font-size: 20px;">✨</span>
+                        <strong style="color: #ffffff; font-size: 16px;">Extension Đã Được Tối Ưu</strong>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="color: #ffffff; margin: 0 0 8px 0;">🎯 Tất Cả Popup Đều Inline:</h4>
+                        <ul style="margin: 0; padding-left: 20px; font-size: 13px; opacity: 0.9;">
+                            <li><strong>OCR Results</strong> - Hiển thị kết quả OCR với copy buttons</li>
+                            <li><strong>Tax Lookup (MST)</strong> - Tra cứu thông tin doanh nghiệp</li>
+                            <li><strong>WordPress Password</strong> - Generate password & hash</li>
+                            <li><strong>Options Settings</strong> - Quick access qua extension popup</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #ffffff; margin: 0 0 8px 0;">🎨 Glass Morphism Design:</h4>
+                        <ul style="margin: 0; padding-left: 20px; font-size: 13px; opacity: 0.9;">
+                            <li>Modern transparent background với blur effect</li>
+                            <li>Smooth animations (fade-in/fade-out)</li>
+                            <li>Multiple close methods (X, ESC, click outside)</li>
+                            <li>Responsive design cho mọi screen size</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🔐 WordPress Password Generator</h2>
+                <p>Tạo mật khẩu và hash WordPress an toàn cho việc quản lý website</p>
+                
+                <div class="setting-group">
+                    <label for="passwordLength">🔢 Độ dài mật khẩu:</label>
+                    <input type="number" id="passwordLength" min="8" max="50" value="12">
+                    <small>Độ dài mật khẩu từ 8-50 ký tự (mặc định: 12)</small>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="includeSpecial">🔤 Bao gồm ký tự đặc biệt:</label>
+                    <input type="checkbox" id="includeSpecial" checked>
+                    <small>Bao gồm ký tự đặc biệt như !@#$%^&*() để tăng độ bảo mật</small>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="hashAlgorithm">🔒 Thuật toán hash:</label>
+                    <select id="hashAlgorithm">
+                        <option value="phpass">PHPass (WordPress mặc định)</option>
+                        <option value="bcrypt">Bcrypt (WordPress 6.8+)</option>
+                        <option value="both">Cả hai (để tương thích)</option>
+                    </select>
+                    <small>PHPass tương thích với WordPress cũ, Bcrypt cho WordPress mới</small>
+                </div>
+                
+                
+                <div class="info-box">
+                    <h3>ℹ️ Thông tin về WordPress Password:</h3>
+                    <ul>
+                        <li><strong>PHPass:</strong> Thuật toán mặc định của WordPress, tương thích với tất cả phiên bản</li>
+                        <li><strong>Bcrypt:</strong> Thuật toán mới hơn, bảo mật cao hơn, dùng cho WordPress 6.8+</li>
+                        <li><strong>Salt:</strong> Mỗi password có salt riêng để tăng bảo mật</li>
+                        <li><strong>Iterations:</strong> Áp dụng 256 lần hash để chống brute force</li>
+                        <li><strong>Format:</strong> Hash có format $P$B[salt][hash] cho PHPass</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guide Tab -->
+        <div id="guide-tab" class="tab-content">
+            <div class="card">
+                <h2>📖 Hướng Dẫn Sử Dụng</h2>
+                
+                <div class="info-box">
+                    <h3>🚀 Cách sử dụng nhanh:</h3>
+                    <ul>
+                        <li><strong>Chụp ảnh có mũi tên:</strong> Chọn text hoặc click vào element, sau đó nhấn <code>Ctrl+Shift+S</code></li>
+                        <li><strong>Chụp ảnh thủ công:</strong> Nhấn <code>Ctrl+Shift+S</code> không có vùng chọn để mở công cụ vẽ</li>
+                        <li><strong>OCR (Ảnh sang text):</strong> Right click → Công cụ → Ảnh sang text</li>
+                        <li><strong>Dịch tự động:</strong> Right click → Công cụ → Dịch tự động</li>
+                        <li><strong>WordPress Password:</strong> Right click → Công cụ → WordPress Password</li>
+                        <li><strong>Context menu:</strong> Right click trên bất kỳ trang web nào để xem các tùy chọn</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⌨️ Phím Tắt</h2>
+                
+                <table class="shortcuts-table">
+                    <thead>
+                        <tr>
+                            <th>Phím tắt</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Ctrl+Shift+S</code></td>
+                            <td>Chụp ảnh thông minh (với mũi tên tự động)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Chuột phải</code></td>
+                            <td>Mở menu context với các tùy chọn</td>
+                        </tr>
+                        <tr>
+                            <td><code>Ctrl+Z</code></td>
+                            <td>Hoàn tác trong công cụ vẽ</td>
+                        </tr>
+                        <tr>
+                            <td><code>Esc</code></td>
+                            <td>Đóng công cụ vẽ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>💡 Mẹo & Thủ Thuật</h2>
+                
+                <div class="info-box">
+                    <h3>📸 Chụp ảnh màn hình:</h3>
+                    <ul>
+                        <li>Chọn text hoặc click vào element trước khi chụp để có mũi tên tự động</li>
+                        <li>Nếu không có vùng chọn, công cụ vẽ sẽ mở để bạn vẽ thủ công</li>
+                        <li>Trong công cụ vẽ, bạn có thể vẽ nhiều hình trên cùng một ảnh</li>
+                        <li>Ảnh sẽ tự động được copy vào clipboard sau khi hoàn tất</li>
+                        <li>Sử dụng màu đỏ để highlight quan trọng, màu khác cho ghi chú</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>🔍 OCR (Ảnh sang text):</h3>
+                    <ul>
+                        <li>Cần cấu hình Google Gemini API key trong tab "OCR Settings"</li>
+                        <li>Model Gemini 2.5 Flash Lite là mặc định, nhanh và miễn phí</li>
+                        <li>Hỗ trợ nhiều ngôn ngữ bao gồm tiếng Việt</li>
+                        <li>Kết quả có thể copy trực tiếp vào clipboard</li>
+                        <li>Thêm nhiều API keys để tránh rate limit</li>
+                        <li><strong>👁️ Mới:</strong> Có thể xem lại và copy API keys đã lưu</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h3>🌐 Dịch tự động:</h3>
+                    <ul>
+                        <li>Tính năng riêng biệt, độc lập với OCR</li>
+                        <li>Tự động OCR + Dịch text sang ngôn ngữ đích</li>
+                        <li>Hỗ trợ 5 ngôn ngữ: Việt, Anh, Trung, Nhật, Hàn</li>
+                        <li>4 chế độ hiển thị: Inline, Window, Sidebar, Notification</li>
+                        <li>Sử dụng: Right click → Công cụ → Dịch tự động</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h3>🔐 WordPress Password:</h3>
+                    <ul>
+                        <li><strong>Mật khẩu:</strong> Tự động tạo với độ dài tùy chỉnh (8-50 ký tự)</li>
+                        <li><strong>Hash:</strong> Tạo hash WordPress tương thích với database</li>
+                        <li><strong>Thuật toán:</strong> PHPass (WordPress cũ) hoặc Bcrypt (WordPress mới)</li>
+                        <li><strong>Bảo mật:</strong> Salt riêng, 256 iterations, ký tự đặc biệt</li>
+                        <li><strong>Sử dụng:</strong> Copy password để đăng nhập, copy hash để update database</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>💾 Quản Lý Cài Đặt</h2>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                    <button id="saveSettings" class="btn">💾 Lưu Cài Đặt</button>
+                    <button id="resetSettings" class="btn btn-secondary">🔄 Khôi Phục Mặc Định</button>
+                    <button id="exportSettings" class="btn btn-secondary">📤 Xuất Cài Đặt</button>
+                    <button id="importSettings" class="btn btn-secondary">📥 Nhập Cài Đặt</button>
+                </div>
+                
+                <div class="info-box">
+                    <h3>ℹ️ Thông tin:</h3>
+                    <ul>
+                        <li><strong>Lưu tự động:</strong> Hầu hết cài đặt được lưu tự động khi thay đổi</li>
+                        <li><strong>Xuất/Nhập:</strong> Backup và chia sẻ cài đặt giữa các máy</li>
+                        <li><strong>Khôi phục:</strong> Reset về cài đặt gốc nếu có vấn đề</li>
+                    </ul>
+                </div>
+                
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <!-- API Settings Tab -->
+        <div id="api-tab" class="tab-content">
+            <div class="card">
+                <h2>🔑 Google Gemini API Settings</h2>
+                <p>Cấu hình API keys để sử dụng tính năng OCR (Ảnh sang Text)</p>
+                
+                <div class="setting-group">
+                    <label for="geminiModel">🤖 Chọn Model AI:</label>
+                    <select id="geminiModel">
+                        <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite - Nhanh & Miễn phí (Mặc định)</option>
+                        <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash (Experimental)</option>
+                        <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+                        <option value="gemini-1.5-flash-8b">Gemini 1.5 Flash 8B</option>
+                        <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+                        <option value="gemini-1.0-pro">Gemini 1.0 Pro</option>
+                    </select>
+                    <small>Gemini 2.5 Flash Lite là model mặc định, nhanh và miễn phí</small>
+                </div>
+
+                <div class="setting-group">
+                    <label>🔐 API Keys:</label>
+                    <div id="apiKeysContainer">
+                        <!-- API keys sẽ được load dynamically -->
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="newApiKey" placeholder="Nhập Google Gemini API Key mới..." style="width: 70%; margin-right: 10px; background: rgba(255,255,255,0.9); color: #1a1a1a;">
+                        <button id="addApiKey" class="btn btn-secondary">➕ Thêm Key</button>
+                    </div>
+                    <small>
+                        <strong>📋 Hướng dẫn lấy API Key:</strong><br>
+                        1. Truy cập <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a><br>
+                        2. Đăng nhập với tài khoản Google<br>
+                        3. Click "Create API Key" → "Create API key in new project"<br>
+                        4. Copy API key và paste vào đây<br>
+                        <strong>💡 Tip:</strong> Thêm nhiều API keys để tránh rate limit
+                    </small>
+                </div>
+
+                <div class="setting-group">
+                    <label>📱 Hiển thị kết quả OCR:</label>
+                    <div style="
+                        background: rgba(0, 123, 255, 0.1);
+                        border: 1px solid rgba(0, 123, 255, 0.3);
+                        border-radius: 8px;
+                        padding: 15px;
+                        margin-bottom: 15px;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="color: #007bff; font-size: 18px;">✨</span>
+                            <strong style="color: #ffffff;">Inline Popup</strong>
+                            <span style="
+                                background: #007bff;
+                                color: white;
+                                padding: 2px 8px;
+                                border-radius: 12px;
+                                font-size: 11px;
+                                font-weight: 500;
+                            ">ACTIVE</span>
+                        </div>
+                        <p style="margin: 0; font-size: 13px; opacity: 0.9;">
+                            Hiển thị kết quả OCR trực tiếp trên trang web với glass morphism design, 
+                            không cần chuyển tab hay mở cửa sổ mới.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>🌐 Hiển thị kết quả Dịch:</label>
+                    <div style="
+                        background: rgba(0, 123, 255, 0.1);
+                        border: 1px solid rgba(0, 123, 255, 0.3);
+                        border-radius: 8px;
+                        padding: 15px;
+                        margin-bottom: 15px;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="color: #007bff; font-size: 18px;">✨</span>
+                            <strong style="color: #ffffff;">Inline Popup</strong>
+                            <span style="
+                                background: #007bff;
+                                color: white;
+                                padding: 2px 8px;
+                                border-radius: 12px;
+                                font-size: 11px;
+                                font-weight: 500;
+                            ">ACTIVE</span>
+                        </div>
+                        <p style="margin: 0; font-size: 13px; opacity: 0.9;">
+                            Hiển thị kết quả dịch trực tiếp trên trang web với glass morphism design,
+                            tích hợp copy và các tính năng tiện ích.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>🎯 Ngôn ngữ đích cho Dịch tự động:</label>
+                    <select id="targetLanguage">
+                        <option value="vi">Tiếng Việt</option>
+                        <option value="en">English</option>
+                        <option value="zh">中文 (Chinese)</option>
+                        <option value="ja">日本語 (Japanese)</option>
+                        <option value="ko">한국어 (Korean)</option>
+                    </select>
+                    <small>Ngôn ngữ nguồn sẽ được tự động phát hiện</small>
+                </div>
+
+                <div class="setting-group">
+                    <label>🎯 Phương pháp OCR:</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="ocrMethod" value="captureVisibleTab" checked>
+                            <span class="radio-label">
+                                <strong>📸 Capture Visible Tab</strong><br>
+                                <small>Chụp toàn màn hình rồi crop vùng chọn (nhanh, ổn định)</small>
+                            </span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="ocrMethod" value="html2canvas">
+                            <span class="radio-label">
+                                <strong>🖼️ HTML2Canvas</strong><br>
+                                <small>Chụp trực tiếp vùng chọn (chính xác hơn, cần tải thư viện)</small>
+                            </span>
+                        </label>
+                    </div>
+                    <small>
+                        <strong>💡 Khuyến nghị:</strong> Capture Visible Tab cho hầu hết trường hợp, HTML2Canvas cho vùng chọn phức tạp
+                    </small>
+                </div>
+
+                <div class="setting-group">
+                    <label for="showOcrNotifications">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showOcrNotifications" checked>
+                            🔔 Hiển thị thông báo trạng thái OCR
+                        </div>
+                    </label>
+                    <div class="description">
+                        Hiển thị thông báo nhỏ ở góc phải màn hình khi OCR thành công hoặc thất bại
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label for="ocrNotificationDuration">⏱️ Thời gian tự động đóng thông báo (giây):</label>
+                    <input type="number" id="ocrNotificationDuration" min="0" max="30" value="5">
+                    <div class="description">
+                        Thời gian thông báo OCR sẽ tự động đóng (0-30 giây). Đặt 0 để không tự động đóng
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>📊 Trạng thái API:</label>
+                    <div id="apiStatus" class="api-status">
+                        <span class="status-indicator">⚪</span>
+                        <span>Chưa kiểm tra</span>
+                    </div>
+                    <button id="testApiKeys" class="btn btn-secondary">🧪 Test API Keys</button>
+                </div>
+
+                <div class="info-box">
+                    <h3>ℹ️ Thông tin quan trọng:</h3>
+                    <ul>
+                        <li><strong>Miễn phí:</strong> Gemini API có quota miễn phí hàng tháng</li>
+                        <li><strong>Bảo mật:</strong> API keys được lưu local trên máy bạn</li>
+                        <li><strong>Rate Limits:</strong> Nếu có nhiều keys, extension sẽ tự động chuyển đổi</li>
+                        <li><strong>Độ chính xác:</strong> Model Pro > Flash > Flash Exp (nhưng Flash Exp nhanh nhất)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>

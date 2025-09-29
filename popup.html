@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Công Cụ Screenshot</title>
+    <style>
+        body {
+            width: 300px;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e8e8e8;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 5px 0 0 0;
+            opacity: 0.8;
+            font-size: 12px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .action-group {
+            margin-bottom: 20px;
+        }
+
+        .action-group h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #1a1a1a;
+            border: 1px solid #e5e5e5;
+        }
+
+        .btn-primary:hover {
+            background: #f5f5f5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e8e8e8;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .shortcut {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .shortcut code {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #ffffff;
+        }
+
+        .footer {
+            padding: 15px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .status {
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            font-size: 11px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            opacity: 0.7;
+        }
+
+        .success {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .error {
+            background: rgba(244, 67, 54, 0.3);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📸 Công Cụ Screenshot</h1>
+        <p>Chụp ảnh màn hình thông minh</p>
+    </div>
+
+    <div class="content">
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <div class="action-group">
+            <h3>🛠️ Công Cụ</h3>
+            <button id="takeScreenshot" class="btn btn-primary">
+                📸 Chụp Ảnh Màn Hình
+            </button>
+            <div style="font-size: 11px; opacity: 0.8; margin-top: 5px;">
+                Tự động phát hiện vùng chọn và thêm mũi tên.<br>
+                Nếu không có vùng chọn, mở công cụ vẽ thủ công.
+            </div>
+            
+        <button id="performOCR" class="btn btn-secondary" style="margin-top: 10px;">
+            🔍 Ảnh sang Text (OCR)
+        </button>
+        <div style="font-size: 11px; opacity: 0.8; margin-top: 5px;">
+            Trích xuất text từ toàn bộ màn hình hiện tại<br>
+            bằng AI Google Gemini.
+        </div>
+        
+        <button id="performWordPress" class="btn btn-secondary" style="margin-top: 10px;">
+            🔐 WordPress Password
+        </button>
+        <div style="font-size: 11px; opacity: 0.8; margin-top: 5px;">
+            Tạo mật khẩu và hash WordPress an toàn<br>
+            cho việc quản lý website.
+        </div>
+        </div>
+
+        <div class="shortcut">
+            <div>⌨️ Phím tắt: <code>Ctrl+Shift+S</code></div>
+            <div style="margin-top: 4px; opacity: 0.7;">
+                hoặc click chuột phải trên trang web
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div>🔄 Đang xử lý...</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="#" id="openOptions">⚙️ Cài đặt</a>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

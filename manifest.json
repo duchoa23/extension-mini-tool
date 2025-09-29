@@ -1,0 +1,70 @@
+{
+  "manifest_version": 3,
+  "name": "DucHoa Tools",
+  "version": "1.0.0",
+  "description": "Extension đa năng",
+  "action": { 
+    "default_title": "DucHoa Tools",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "64": "icons/icon64.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "offscreen",
+    "clipboardWrite",
+    "notifications",
+    "contextMenus",
+    "storage"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "capture-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "Chụp ảnh màn hình"
+    }
+  },
+        "web_accessible_resources": [
+            {
+                "resources": [
+                    "modules/screenshot/offscreen.html",
+                    "modules/screenshot/drawing-tool.html",
+                    "modules/ocr/ocr-popup.html",
+                    "modules/ocr/ocr-sidebar.html",
+                    "modules/ocr/ocr-unified-notification.js",
+                    "modules/ocr/region-selector.js",
+                    "modules/shared/utils.js",
+                    "modules/options/options-inline.js",
+                    "modules/tax-lookup/tax-lookup-inline.js",
+                    "modules/wordpress/wp-inline.js",
+                    "libs/html2canvas.min.js"
+                ],
+                "matches": ["<all_urls>"]
+            }
+        ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  }
+}
